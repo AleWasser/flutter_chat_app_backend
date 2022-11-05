@@ -12,6 +12,8 @@ app.use(express.json());
 
 //* Server config
 const server = require("http").createServer(app);
+module.exports.io = require("socket.io")(server);
+require("./sockets/socket");
 
 //* Path config
 const publicPath = path.resolve(__dirname, "public");
@@ -19,6 +21,8 @@ app.use(express.static(publicPath));
 
 //* Routes
 app.use("/api/login", require("./routes/auth"));
+app.use("/api/messages", require("./routes/messages"));
+app.use("/api/users", require("./routes/users"));
 
 server.listen(process.env.PORT, (err) => {
   if (err) {
